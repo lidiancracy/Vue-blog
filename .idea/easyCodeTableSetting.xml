@@ -368,7 +368,7 @@
               <option name="saveModelName" value="sg-blog" />
               <option name="savePackageName" value="com.sangeng" />
               <option name="savePath" value="./sg-blog/src/main/java/com/sangeng" />
-              <option name="templateGroupName" value="" />
+              <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>
         </entry>

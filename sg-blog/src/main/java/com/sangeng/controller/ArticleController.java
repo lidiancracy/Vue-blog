@@ -20,15 +20,35 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
-   @GetMapping("/hotArticleList")
-    public ResponseResult hotarticle(){
-       return articleService.hotArticlelist();
-   }
 
-//   主页文章显示,分页查询
+    /**
+     * 最热文章显示
+     *
+     * @return
+     */
+    @GetMapping("/hotArticleList")
+    public ResponseResult hotarticle() {
+        return articleService.hotArticlelist();
+    }
+
+    /**
+     * 主页 分类主页 文章显示,分页查询
+     * 传参默认是query风格
+     */
+
     @GetMapping("/articleList")
-    public ResponseResult Articlelist( Long categoryId,Integer pageNum,Integer pageSize){
-        return articleService.articleList(pageNum,pageSize,categoryId);
+    public ResponseResult Articlelist(Long categoryId, Integer pageNum, Integer pageSize) {
+        return articleService.articleList(pageNum, pageSize, categoryId);
+    }
+
+    /**
+     * 根据id查询文章详情,传参path风格
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseResult getblogdetail(@PathVariable("id") Long id){
+        return articleService.getarticledetail(id);
     }
 }
 

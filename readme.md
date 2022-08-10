@@ -19,3 +19,8 @@
 - 我们使用Stream流
 - categories象征着一个class集合 categories.stream().filter可以筛选处里面自定义条件的实体
 - 如果我们想把当前实体list的一个属性拿出来用到另一张表中查询,可以用categories.stream().map
+
+> 在本serviceimpl中,可以直接list查询表中所有条,list(wrapper) 查询满足要求的条数
+> 如果想用其他表的list 或者getbyid ,可以先@autowired service
+
+今日完结 p31

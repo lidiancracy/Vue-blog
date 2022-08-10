@@ -12,6 +12,7 @@ import com.sangeng.service.ArticleService;
 
 import com.sangeng.service.CategoryService;
 import com.sangeng.utils.BeanCopyUtils;
+import com.sangeng.vo.ArticleDetailVo;
 import com.sangeng.vo.ArticleListVo;
 import com.sangeng.vo.HotArticlevo;
 import com.sangeng.vo.PageVo;
@@ -36,6 +37,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      */
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ArticleService articleService;
     @Override
     public ResponseResult hotArticlelist() {
 //        查询热门
@@ -106,6 +109,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 //        不穿articlevo，传pagevo,pagevo里面的list就是页面数据
         PageVo pageVo = new PageVo(articleListVos, articlePage.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    /**
+     * 根据id获取文章detail,也涉及两张表,catename
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseResult getarticledetail(Long id) {
+        Article byId = getById(id);
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(byId, ArticleDetailVo.class);
+        Category category = categoryService.getById(byId.getCategoryId());
+        if(category!=null){
+            articleDetailVo.setCategoryName(category.getName());
+        }
+        return ResponseResult.okResult(articleDetailVo);
     }
 
 
