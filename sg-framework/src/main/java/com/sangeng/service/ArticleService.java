@@ -13,5 +13,8 @@ import com.sangeng.entity.R.ResponseResult;
 public interface ArticleService extends IService<Article> {
 
     ResponseResult hotArticlelist();
+
+    ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId);
+
 }
 

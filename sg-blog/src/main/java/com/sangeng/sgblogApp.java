@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date 2022/8/9 13:57
  */
 @SpringBootApplication
-@MapperScan("com.sangeng.dao")
+@MapperScan("com.sangeng.mapper")
 public class sgblogApp {
     public static void main(String[] args) {
         SpringApplication.run(sgblogApp.class,args);

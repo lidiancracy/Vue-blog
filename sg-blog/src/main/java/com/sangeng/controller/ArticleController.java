@@ -24,5 +24,11 @@ public class ArticleController {
     public ResponseResult hotarticle(){
        return articleService.hotArticlelist();
    }
+
+//   主页文章显示,分页查询
+    @GetMapping("/articleList")
+    public ResponseResult Articlelist( Long categoryId,Integer pageNum,Integer pageSize){
+        return articleService.articleList(pageNum,pageSize,categoryId);
+    }
 }
 

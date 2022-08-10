@@ -1,4 +1,4 @@
-package com.sangeng.dao;
+package com.sangeng.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sangeng.entity.Article;
@@ -9,7 +9,7 @@ import com.sangeng.entity.Article;
  * @author makejava
  * @since 2022-08-09 17:30:01
  */
-public interface ArticleDao extends BaseMapper<Article> {
+public interface ArticleMapper extends BaseMapper<Article> {
 
 }
 
