@@ -4,18 +4,23 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sangeng.constants.SystemConstants;
+import com.sangeng.entity.Category;
 import com.sangeng.mapper.ArticleMapper;
 import com.sangeng.entity.Article;
 import com.sangeng.entity.R.ResponseResult;
 import com.sangeng.service.ArticleService;
 
+import com.sangeng.service.CategoryService;
 import com.sangeng.utils.BeanCopyUtils;
 import com.sangeng.vo.ArticleListVo;
 import com.sangeng.vo.HotArticlevo;
 import com.sangeng.vo.PageVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 文章表(Article)表服务实现类
@@ -29,6 +34,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * 查询出浏览量前十的文章, id,view,title
      * @return
      */
+    @Autowired
+    private CategoryService categoryService;
     @Override
     public ResponseResult hotArticlelist() {
 //        查询热门
@@ -54,6 +61,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     }
 
+    /**
+     * index 和分类页面的blog显示,这里我们希望return对象包含双表中的数据
+     * @param pageNum
+     * @param pageSize
+     * @param categoryId
+     * @return
+     */
     @Override
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
         LambdaQueryWrapper<Article> articleLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -68,8 +82,27 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Page<Article> articlePage = new Page<>(pageNum,pageSize);
         page(articlePage, articleLambdaQueryWrapper);
         List<Article> records = articlePage.getRecords();
+        /**
+         * 使用 for循环赋值
+         */
+//        for (Article record : records) {
+//            Category byId = categoryService.getById(record.getCategoryId());
+//            record.setCategoryName(byId.getName());
+//        }
+        /**
+         * 使用stream流赋值,本质也是循环赋值
+         */
+        //            参数是每个小的article
+        List<Article> collect = records.stream().map(article -> {
+            Category cateid = categoryService.getById(article.getCategoryId());
+            String name = cateid.getName();
+            article.setCategoryName(name);
+            return article;
+        }).collect(Collectors.toList());
+
+
 //        将article封装到vo
-        List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(records, ArticleListVo.class);
+        List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(collect, ArticleListVo.class);
 //        不穿articlevo，传pagevo,pagevo里面的list就是页面数据
         PageVo pageVo = new PageVo(articleListVos, articlePage.getTotal());
         return ResponseResult.okResult(pageVo);

@@ -1,5 +1,6 @@
 package com.sangeng.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -46,7 +47,10 @@ public class Article {
     private Date updateTime;
     //删除标志（0代表未删除，1代表已删除）
     private Integer delFlag;
-
-
+    /**
+     * 这是cate表中对应的数据,为了bean复制简单
+     */
+    @TableField(exist = false)
+    private String categoryName;
 }
 
