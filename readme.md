@@ -24,3 +24,10 @@
 > 如果想用其他表的list 或者getbyid ,可以先@autowired service
 
 今日完结 p31
+
+## 8/11
+今天学下函数式编程以及springsecurity框架
+
+## 8/13
+花了两天时间学了一下 security框架 以及stream流,今天继续学blog
+
