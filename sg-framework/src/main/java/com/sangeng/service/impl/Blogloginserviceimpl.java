@@ -50,5 +50,14 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         return ResponseResult.okResult(vo);
     }
 
+    @Override
+    public ResponseResult logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser principal = (LoginUser)authentication.getPrincipal();
+        String s = principal.getUser().getId().toString();
+        redisCache.deleteObject("bloglogin:"+s);
+        return ResponseResult.okResult();
+    }
+
 
 }
