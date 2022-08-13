@@ -1,5 +1,6 @@
 package com.sangeng.controller;
 
+import com.sangeng.exception.SystemException;
 import com.sangeng.entity.R.ResponseResult;
 import com.sangeng.entity.User;
 import com.sangeng.enums.AppHttpCodeEnum;
@@ -22,7 +23,10 @@ public class BlogLoginController {
 
     @PostMapping("/login")
     public ResponseResult login(@RequestBody User user){
-
+        if(!StringUtils.hasText(user.getUserName())){
+            //提示 必须要传用户名
+            throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
+        }
         return blogLoginService.login(user);
     }
 }
