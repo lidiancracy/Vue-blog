@@ -79,8 +79,25 @@
 
 配完登录与注册以后我出现前端页面各种小bug,我们打开SecurityConfig需要授权的请求我们单独设置 ,其他请求我们全部permitAll(),这样主页就可以显示出来了.另外我们需要取消系统默认的注销方式,也是在sc里面配置
 
+### 8/15
 
+花了一天处理python,今天接着看
 
+评论比较复杂,因为涉及父评论子评论之类的,以下是返回给前端的Json格式
+![](image/commentrp.png)
+
+未登录的用户可以查看别人评论,但是发起评论必须要登录
+
+### 8/16
+
+`List<Comment> list = list(commentLambdaQueryWrapper) `可以返回满足lamda表达式的 list集合,如果你希望查出来的结果要做分页操作的话,不要使用`List()`,使用`page`
+包装后 用`get`
+返回集合
+
+- 评论分了根评论和子评论,根评论直接在文章下面,没有X回复X这样的形式.
+- 我们首先查出所有的根评论 `rootid=-1`即为根评论.
+- `tocommentid`和`tocommentname`应该是针对子评论,可以显示X回复X
+- 
 
 
 
