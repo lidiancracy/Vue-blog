@@ -107,9 +107,12 @@
 发表评论分为在文章下发表评论(发表父评论或者子评论)以及在友链上发表评论
 
 我们希望每次发表评论 MP自动帮我们添加 comment表中的`updatetime`等等,引入工具类
-`handler.mybatisplus.java`以及`utils.SecurityUtils`
+`handler.mybatisplus.java`以及`utils.SecurityUtils`,第二个工具包可以快速获取登录用户的实体以及用户id(在token里面获取比较安全)
 
 我在securityconfig并没有给发布评论设置权限,但是不登录无法发表评论,应该是前端设置过
 
+**小技巧**
+- 前端会有一个希望收到的json格式,这个json格式就是你的vo样式.比如之前的comment还带total,那返回
+vo肯定是pagevo啊而不是commentvo啊,_**一一对应,不用怀疑**_
 
 
