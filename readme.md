@@ -93,11 +93,14 @@
 `List<Comment> list = list(commentLambdaQueryWrapper) `可以返回满足lamda表达式的 list集合,如果你希望查出来的结果要做分页操作的话,不要使用`List()`,使用`page`
 包装后 用`get`
 返回集合
-
+> 显示父评论
 - 评论分了根评论和子评论,根评论直接在文章下面,没有X回复X这样的形式.
 - 我们首先查出所有的根评论 `rootid=-1`即为根评论.
-- `tocommentid`和`tocommentname`应该是针对子评论,可以显示X回复X
-- 
+- 不管是父评论还是子评论都需要知道这评论是谁发的，子评论还需要额外添加发给谁
+`tocommentid`和`tocommentname`应该是针对子评论,可以显示X回复X
+
+> 显示子评论
+直接根据父评论的children显示出来就行了
 
 
 

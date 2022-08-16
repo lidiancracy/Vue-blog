@@ -30,5 +30,5 @@ public class CommentVo {
 
     private String username;
 
-//    private List<CommentVo> children;
+    private List<CommentVo> children;
 }
