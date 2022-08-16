@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                注销需要登账号
                 .antMatchers("/logout").authenticated()
                 //需要认证登录才能访问
-                .antMatchers("/link/getAllLink").authenticated()
+//                .antMatchers("/link/getAllLink").authenticated()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().permitAll();
         //配置异常处理器

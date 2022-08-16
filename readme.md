@@ -94,15 +94,22 @@
 包装后 用`get`
 返回集合
 > 显示父评论
+
 - 评论分了根评论和子评论,根评论直接在文章下面,没有X回复X这样的形式.
 - 我们首先查出所有的根评论 `rootid=-1`即为根评论.
 - 不管是父评论还是子评论都需要知道这评论是谁发的，子评论还需要额外添加发给谁
-`tocommentid`和`tocommentname`应该是针对子评论,可以显示X回复X
+  `tocommentid`和`tocommentname`应该是针对子评论,可以显示X回复X
 
-> 显示子评论
-直接根据父评论的children显示出来就行了
+> 显示子评论 直接根据父评论的children显示出来就行了
 
+> 发表评论
+>
+发表评论分为在文章下发表评论(发表父评论或者子评论)以及在友链上发表评论
 
+我们希望每次发表评论 MP自动帮我们添加 comment表中的`updatetime`等等,引入工具类
+`handler.mybatisplus.java`以及`utils.SecurityUtils`
+
+我在securityconfig并没有给发布评论设置权限,但是不登录无法发表评论,应该是前端设置过
 
 
 

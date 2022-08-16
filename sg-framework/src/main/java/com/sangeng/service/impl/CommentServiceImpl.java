@@ -40,10 +40,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public ResponseResult commentList(Long articalId, Integer pageNum, Integer pageSize) {
         //查询文章对应的根评论
         LambdaQueryWrapper<Comment> commentLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        commentLambdaQueryWrapper.eq(Comment::getArticleId,articalId);
-        commentLambdaQueryWrapper.eq(Comment::getRootId,-1);
+        commentLambdaQueryWrapper.eq(Comment::getArticleId, articalId);
+        commentLambdaQueryWrapper.eq(Comment::getRootId, -1);
+        commentLambdaQueryWrapper.eq(Comment::getType,0);
         Page<Comment> page = new Page<>(pageNum, pageSize);
-        page(page,commentLambdaQueryWrapper);
+        page(page, commentLambdaQueryWrapper);
         //分页查询
         /**
          * return的时候一定要与前端沟通,看他希望你返回一个什么对象,你在vo里面包装
@@ -61,24 +62,68 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             List<CommentVo> getchildren = getchildren(commentVo.getId());
             commentVo.setChildren(getchildren);
         }
-        return ResponseResult.okResult(new PageVo(tocommentvolist,page.getTotal()));
+        return ResponseResult.okResult(new PageVo(tocommentvolist, page.getTotal()));
+    }
+
+    @Override
+    public ResponseResult addcomment(Comment comment) {
+//        MP为我们提供了save方法快速插入,但是你前端传过来的comment属性不一定全,所以需要我们自己补全
+//        MP提供自动填充
+        save(comment);
+        return ResponseResult.okResult();
+
+    }
+
+    /**
+     * @author: 83799
+     * @date: 2022/8/16 22:08
+     * @description: 友联评论和文章评论一个原理我直接复制了
+     * @Param:* @Param null: 
+     * @Return:* @return: null
+     */
+    @Override
+    public ResponseResult showlinkcomment(Integer pageNum, Integer pageSize) {
+        //查询文章对应的根评论
+        LambdaQueryWrapper<Comment> commentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        commentLambdaQueryWrapper.eq(Comment::getRootId, -1);
+        commentLambdaQueryWrapper.eq(Comment::getType,1);
+        Page<Comment> page = new Page<>(pageNum, pageSize);
+        page(page, commentLambdaQueryWrapper);
+        //分页查询
+        /**
+         * return的时候一定要与前端沟通,看他希望你返回一个什么对象,你在vo里面包装
+         * vo list集合
+         * total 总的父评论条数
+         */
+        List<CommentVo> tocommentvolist = tocommentvolist(page.getRecords());
+        /**
+         * @author: 83799
+         * @date: 2022/8/16 16:31
+         * @description: 如果有子评论则还需要children属性
+         */
+        for (CommentVo commentVo : tocommentvolist) {
+//            只有父评论才需要children,子评论没有子子评论
+            List<CommentVo> getchildren = getchildren(commentVo.getId());
+            commentVo.setChildren(getchildren);
+        }
+        return ResponseResult.okResult(new PageVo(tocommentvolist, page.getTotal()));
     }
 
     /**
      * @author: 83799
      * @date: 2022/8/16 16:39
-     * @description: commentList ---> commentvolist
+     * @description: commentList ---> commentvolist,多了几个属性
      * @Param:* @Param null:
      * @Return:* @return: null
      */
-    private List<CommentVo> tocommentvolist(List<Comment> commentList){
+    private List<CommentVo> tocommentvolist(List<Comment> commentList) {
         List<CommentVo> commentVos = BeanCopyUtils.copyBeanList(commentList, CommentVo.class);
         for (CommentVo commentVo : commentVos) {
             User byId = userService.getById(commentVo.getCreateBy());
 //            这条评论是谁发的，这不管是父评论还是子评论都需要的
             commentVo.setUsername(byId.getNickName());
 //            说明他是子评论
-            if(commentVo.getToCommentUserId()!=-1){
+            if (commentVo.getToCommentUserId() != -1) {
 //                评论发给谁 ，只有子评论才需要这个
                 String nickName = userService.getById(commentVo.getToCommentUserId()).getNickName();
                 commentVo.setToCommentUserName(nickName);
@@ -86,6 +131,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         }
         return commentVos;
     }
+
     /**
      * @author: 83799
      * @date: 2022/8/16 16:41
@@ -93,10 +139,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
      * @Param:* @Param null:
      * @Return:* @return: null
      */
-    public List<CommentVo> getchildren(Long id){
+    public List<CommentVo> getchildren(Long id) {
         LambdaQueryWrapper<Comment> qw = new LambdaQueryWrapper<>();
 //        自己看表去,把 id拿出那,一一去和rootid比较,相等则是其子评论
-        qw.eq(Comment::getRootId,id);
+        qw.eq(Comment::getRootId, id);
         qw.orderByAsc(Comment::getCreateTime);
         List<Comment> list = list(qw);
         List<CommentVo> tocommentvolist = tocommentvolist(list);

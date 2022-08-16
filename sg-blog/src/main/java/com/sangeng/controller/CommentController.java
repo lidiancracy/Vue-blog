@@ -1,6 +1,7 @@
 package com.sangeng.controller;
 
 import com.sangeng.constants.SystemConstants;
+import com.sangeng.entity.Comment;
 import com.sangeng.entity.R.ResponseResult;
 import com.sangeng.service.CommentService;
 import io.swagger.models.RefResponse;
@@ -22,6 +23,16 @@ public class CommentController {
     @GetMapping("/commentList")
     public ResponseResult commentList(Long articleId,Integer pageNum,Integer pageSize){
         return commentService.commentList(articleId,pageNum,pageSize);
+    }
+// 前端做了处理,友联和评论通用这一个接口
+    @PostMapping
+    public ResponseResult addcomment(@RequestBody Comment comment){
+        return commentService.addcomment(comment);
+    }
+
+    @GetMapping("/linkCommentList")
+    public ResponseResult linkconmment(Integer pageNum,Integer pageSize){
+        return commentService.showlinkcomment(pageNum,pageSize);
     }
 
 
