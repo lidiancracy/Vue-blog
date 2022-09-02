@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //关闭默认的注销功能
         http.logout().disable();
     }
-
+// 已经注入到容器里面了,需要使用的话直接 autowired
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
