@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  */
 @Service("userService")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-
+    @Autowired UserService userService;
     @Override
     public ResponseResult userinfo() {
 //        工具包获取userid
@@ -28,5 +28,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User byId = getById(userId);
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(byId, UserInfoVo.class);
         return ResponseResult.okResult(userInfoVo);
+    }
+
+    @Override
+    public ResponseResult updateuserinfo(User user) {
+        userService.updateById(user);
+        return ResponseResult.okResult();
     }
 }

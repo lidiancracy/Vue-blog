@@ -1,11 +1,10 @@
 package com.sangeng.controller;
 
 import com.sangeng.entity.R.ResponseResult;
+import com.sangeng.entity.User;
 import com.sangeng.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName usercontroller
@@ -20,5 +19,10 @@ public class usercontroller {
     @GetMapping("/userInfo")
     public ResponseResult userinfo(){
         return userService.userinfo();
+    }
+
+    @PutMapping("/userInfo")
+    public ResponseResult updateuserinfo(@RequestBody User user){
+        return  userService.updateuserinfo(user);
     }
 }
