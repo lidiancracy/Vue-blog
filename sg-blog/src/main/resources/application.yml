@@ -22,7 +22,7 @@ mybatis-plus:
       id-type: auto
 
 
-#oss:
-#  accessKey: 1ltxb75nnwzFNIok8MHVI2RcZzgUJDn3qxCSSzgM
-#  secretKey: XN4T97vXwUAEUz7LXITWHf3wy6FBHF8pMMtYhwXj
-#  bucket: sg-blog
+oss:
+  accessKey: pCJlN04Ffe6NS-BJ3Wm8B0Suuk1BHfL3iX4c-SMf
+  secretKey: yM5JK3zHG08CgC47Znp0NvTanukms4iGVzqd7O9B
+  bucket: sg-blog3
