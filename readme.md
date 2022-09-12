@@ -124,5 +124,14 @@ vo肯定是pagevo啊而不是commentvo啊,_**一一对应,不用怀疑**_
 
 post 请求 如果需要登录校验,token放在header里面,图片文件在body的form-data里面上传
 
+### 9/12
+继续来做博客
+使用redies更新浏览量
+- 服务器重启时将数据库数据copy到redies里面
+  - 使用viewrunner implement 一个方法
+- 每次浏览，redies中的数据+1
+  - redisCache.setCacheMap() 这样redies文件名是hash类型而不是String 类型，然后数据程表格排列
+- 定时将redies里面的数据 copy 到 数据库里面
+- 读取文章的浏览量从redies里面获取，保证是实时的
 
 

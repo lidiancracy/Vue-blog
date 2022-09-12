@@ -12,6 +12,7 @@ import com.sangeng.service.ArticleService;
 
 import com.sangeng.service.CategoryService;
 import com.sangeng.utils.BeanCopyUtils;
+import com.sangeng.utils.RedisCache;
 import com.sangeng.vo.ArticleDetailVo;
 import com.sangeng.vo.ArticleListVo;
 import com.sangeng.vo.HotArticlevo;
@@ -37,6 +38,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      */
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RedisCache redisCache;
     @Autowired
     private ArticleService articleService;
     @Override
@@ -125,6 +128,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             articleDetailVo.setCategoryName(category.getName());
         }
         return ResponseResult.okResult(articleDetailVo);
+    }
+
+    /**
+     * @author: 83799
+     * @date: 2022/9/12 19:46
+     * @description: 更新浏览量，数据放在了redies中，每次更新就更新redies了，不要更新数据库
+     * @Param:* @Param null:
+     * @Return:* @return: null
+     */
+    @Override
+    public ResponseResult updateview(Long id) {
+        redisCache.increase("viewcount",id.toString(),1);
+        return ResponseResult.okResult();
     }
 
 

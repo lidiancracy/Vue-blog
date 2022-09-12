@@ -50,5 +50,11 @@ public class ArticleController {
     public ResponseResult getblogdetail(@PathVariable("id") Long id){
         return articleService.getarticledetail(id);
     }
+//    更新浏览量
+    @PutMapping("/updateViewCount/{id}")
+    public  ResponseResult updateview(@PathVariable("id") Long id){
+        return articleService.updateview(id);
+    }
+
 }
 
