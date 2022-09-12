@@ -53,9 +53,9 @@ public class Article {
     @TableField(exist = false)
     private String categoryName;
 
-//    public Article(String key, Integer value) {
-//        id= Long.valueOf(key);
-//        viewCount= Long.valueOf(value);
-//    }
+
+
+
+
 }
 

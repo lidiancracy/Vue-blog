@@ -19,23 +19,19 @@ import java.util.stream.Collectors;
  */
 @Component
 public class updateviewjob {
-//    @Autowired
-//    private RedisCache redisCache;
-//    @Autowired
-//    private ArticleService articleService;
-//    @Scheduled(cron = "0/5 * * * * ?")
-//    public void updateview(){
-////        获取redies浏览量
-//        Map<String, Integer> viewcount = redisCache.getCacheMap("viewcount");
-//        List<Article> collect = viewcount.entrySet()
+    @Autowired
+    private RedisCache redisCache;
+    @Autowired
+    private  ArticleService articleService;
+
+    @Scheduled(cron = "0/5 * * * * ?")
+    public void updateview() {
+//        获取redies浏览量
+        Map<String, Integer> viewcount = redisCache.getCacheMap("viewcount");
+//        List<Article> articles = viewcount.entrySet()
 //                .stream()
-//                .map(new Function<Map.Entry<String, Integer>, Article>() {
-//                    @Override
-//                    public Article apply(Map.Entry<String, Integer> stringIntegerEntry) {
-//
-//                        return new Article(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
-//                    }
-//                }).collect(Collectors.toList());
-//        articleService.updateBatchById(collect);
-//    }
+//                .map(entry -> new Article(Long.valueOf(entry.getKey()), entry.getValue().longValue())).collect(Collectors.toList());
+//        articleService.updateBatchById(articles);
+
+    }
 }

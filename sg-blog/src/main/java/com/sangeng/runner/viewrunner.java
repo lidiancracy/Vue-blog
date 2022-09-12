@@ -2,6 +2,7 @@ package com.sangeng.runner;
 
 import com.sangeng.entity.Article;
 import com.sangeng.mapper.ArticleMapper;
+import com.sangeng.service.ArticleService;
 import com.sangeng.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,13 +22,13 @@ import java.util.stream.Collectors;
 @Component
 public class viewrunner implements CommandLineRunner {
     @Autowired
-    private ArticleMapper articleMapper;
+    private ArticleService articleService;
     @Autowired
     private RedisCache redisCache;
     @Override
     public void run(String... args) throws Exception {
 //        查询博客信息 id 以及 viewcount
-        List<Article> articleList = articleMapper.selectList(null);
+        List<Article> articleList = articleService.list();
         Map<String, Integer> collect = articleList.stream()
                 .collect(Collectors.toMap(new Function<Article, String>() {
                     @Override
