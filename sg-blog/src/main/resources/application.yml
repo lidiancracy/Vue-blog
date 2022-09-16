@@ -13,6 +13,26 @@ spring:
   redis:
       host: 127.0.0.1
       port: 6379
+#      email配置
+  mail:
+    #smtp服务主机  qq邮箱则为smtp.qq.com
+    host: smtp.qq.com
+    #服务协议
+    protocol: smtp
+    # 编码集
+    default-encoding: UTF-8
+    #发送邮件的账户
+    username: 837997288@qq.com
+    #授权码
+    password: ciklwbtgpmoybbdc
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 mybatis-plus:
   configuration:
     # 日志
@@ -29,3 +49,8 @@ oss:
   accessKey: pCJlN04Ffe6NS-BJ3Wm8B0Suuk1BHfL3iX4c-SMf
   secretKey: yM5JK3zHG08CgC47Znp0NvTanukms4iGVzqd7O9B
   bucket: sg-blog3
+
+
+
+
+

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
-public class BlogLoginServiceImpl implements BlogLoginService {
+public class Blogloginserviceimpl implements BlogLoginService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
