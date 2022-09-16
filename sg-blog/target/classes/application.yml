@@ -44,13 +44,11 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto
 
-
 oss:
   accessKey: pCJlN04Ffe6NS-BJ3Wm8B0Suuk1BHfL3iX4c-SMf
   secretKey: yM5JK3zHG08CgC47Znp0NvTanukms4iGVzqd7O9B
   bucket: sg-blog3
-
-
-
-
+logging:
+  level:
+    root: info
 
